@@ -8,7 +8,7 @@ const parseMessage = msg => {
     user: msg.author,
     attachments: msg.attachments.map(attach => attach.message),
     content: msg.content,
-    reply: msg.reply,
+    reply: (message) => msg.reply(message),
   };
 }
 

@@ -31,7 +31,7 @@ const Tournament = {
     getDecklists: (data) => {
         const user = users[data.user.id];
 
-        if (data.attachments) {
+        if (data.attachments.length > 0) {
             if (data.attachments.length === 1) {
                 if (!user.files || user.files.length === 0) {
                     user.files = [data.attachments];
@@ -40,16 +40,18 @@ const Tournament = {
 
                 if (user.files.length === 1) {
                     user.files.push(data.attachments);
+                    user.step = 4;
                     return data.reply('Bien, has terminado de cargar tus decklists.');
                 }
 
-              data.reply('Oh, Ya has cargado las 2 decklists permitidas.');
+              return data.reply('Oh, Ya has cargado las 2 decklists permitidas.');
             } else if (data.attachments.length === 2) {
                 if (user.files && user.files.length === 1) {
                     return data.reply('Ya tienes cargada una decklist, no puedes subir 2 más.');
                 }
 
                 user.files = [];
+                user.step = 4;
                 data.attachments.map(attachment => user.files.push(attachment));
                 return data.reply('Bien, has cargado tus 2 decklists.');
             }

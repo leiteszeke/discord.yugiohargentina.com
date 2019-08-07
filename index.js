@@ -17,7 +17,8 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-  if (msg.author.bot) return;
+  if (msg.author.bot || msg.channel.type !== 'dm') return;
+
   const data = parseMessage(msg);
   const step = Flows.Tournament.getUserStep(data);
 

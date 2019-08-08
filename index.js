@@ -8,6 +8,7 @@ const parseMessage = msg => {
     user: msg.author,
     attachments: msg.attachments.map(attach => attach.message),
     content: msg.content,
+    send: (message, options) => msg.channel.send(message, options),
     reply: (message) => msg.reply(message),
   };
 }
@@ -26,8 +27,11 @@ client.on('message', msg => {
     case 1: return Flows.Tournament.sayHi(data);
     case 2: return Flows.Tournament.askForTournament(data);
     case 3: return Flows.Tournament.getDecklists(data);
+    case 4: return Flows.Tournament.getConfirmation(data);
     default: return msg.reply('No sé que decir.');
   }
 });
+
+client.on('disconnect', () => client.destroy());
 
 client.login(process.env.APP_TOKEN);
